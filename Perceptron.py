@@ -20,25 +20,25 @@ class Perceptron:
         self.learning_rate = learning_rate
         self.epochs = epochs
 
-    def _step_function(self, z):
+    def paso(self, z):
         """Función de activación (Función de Paso/Heaviside)."""
         return np.where(z >= 0, 1, 0)
 
-    def predict(self, x):
+    def prediccion(self, x):
         """Paso de avance: calcula la salida predicha"""
         # Suma ponderada: (x . w) + b
         linear_output = np.dot(x, self.weights) + self.bias
-        return self._step_function(linear_output)
+        return self.paso(linear_output)
 
     def train(self, x, y):
-        """Aplica la regla de aprendizaje del perceptrón."""
+        """Aplica la regla de aprendizaje del perceptrón"""
         print(f"Pesos iniciales: {self.weights}, Sesgo inicial: {self.bias:.4f}")
 
         for epoch in range(self.epochs):
             errors = 0
             for x_i, y_true in zip(x, y):
                 # Calcular la predicción
-                y_pred = self.predict(x_i)
+                y_pred = self.prediccion(x_i)
 
                 # Calcular el error
                 error = y_true - y_pred
@@ -76,5 +76,5 @@ if __name__ == "__main__":
     # Probar la clasificación final
     print("\n--- Pruebas de Clasificación ---")
     for x_i, y_true in zip(x, y):
-        prediction = perceptron_model.predict(x_i)
-        print(f"Entrada: {x_i}, Real: {int(y_true)}, Predicción: {prediction[0]}")
+        prediction = perceptron_model.prediccion(x_i)
+        print(f"Entrada: {x_i}, Real: {int(y_true)}, Predicción: {int(prediction)}")
